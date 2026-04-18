@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<OfficeApp
+  xmlns="http://schemas.microsoft.com/office/appforoffice/1.1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:bt="http://schemas.microsoft.com/office/officeappbasictypes/1.0"
+  xmlns:mailappor="http://schemas.microsoft.com/office/mailappversionoverrides/1.0"
+  xsi:type="MailApp">
+
+  <Id>a1b2c3d4-e5f6-7890-abcd-ef1234567890</Id>
+  <Version>1.0.0.1</Version>
+  <ProviderName>TradeDoc</ProviderName>
+  <DefaultLocale>en-US</DefaultLocale>
+  <DisplayName DefaultValue="TradeDoc"/>
+  <Description DefaultValue="Extract structured data from trade documents and push to Oracle GTM or SAP GTS."/>
+  <IconUrl DefaultValue="https://td-tau-nine.vercel.app/icon32.png"/>
+  <HighResolutionIconUrl DefaultValue="https://td-tau-nine.vercel.app/icon80.png"/>
+  <SupportUrl DefaultValue="https://td-tau-nine.vercel.app"/>
+
+  <AppDomains>
+    <AppDomain>https://td-tau-nine.vercel.app</AppDomain>
+    <AppDomain>https://api.anthropic.com</AppDomain>
+  </AppDomains>
+
+  <Hosts>
+    <Host Name="Mailbox"/>
+  </Hosts>
+
+  <Requirements>
+    <Sets>
+      <Set Name="Mailbox" MinVersion="1.1"/>
+    </Sets>
+  </Requirements>
+
+  <FormSettings>
+    <Form xsi:type="ItemRead">
+      <DesktopSettings>
+        <SourceLocation DefaultValue="https://td-tau-nine.vercel.app/taskpane.html"/>
+        <RequestedHeight>450</RequestedHeight>
+      </DesktopSettings>
+    </Form>
+  </FormSettings>
+
+  <Permissions>ReadWriteMailbox</Permissions>
+
+  <Rule xsi:type="RuleCollection" Mode="Or">
+    <Rule xsi:type="ItemHasAttachment"/>
+    <Rule xsi:type="ItemIs" ItemType="Message" FormType="Read"/>
+  </Rule>
+
+  <DisableEntityHighlighting>false</DisableEntityHighlighting>
+
+  <VersionOverrides xmlns="http://schemas.microsoft.com/office/mailappversionoverrides" xsi:type="VersionOverridesV1_0">
+
+    <Requirements>
+      <bt:Sets DefaultMinVersion="1.3">
+        <bt:Set Name="Mailbox"/>
+      </bt:Sets>
+    </Requirements>
+
+    <Hosts>
+      <Host xsi:type="MailHost">
+        <DesktopFormFactor>
+
+          <FunctionFile resid="functionFile"/>
+
+          <ExtensionPoint xsi:type="MessageReadCommandSurface">
+            <OfficeTab id="TabDefault">
+              <Group id="msgReadGroup">
+                <Label resid="groupLabel"/>
+                <Control xsi:type="Button" id="msgReadOpenPaneButton">
+                  <Label resid="paneButtonLabel"/>
+                  <Supertip>
+                    <Title resid="paneButtonLabel"/>
+                    <Description resid="paneButtonTip"/>
+                  </Supertip>
+                  <Icon>
+                    <bt:Image size="16" resid="icon16"/>
+                    <bt:Image size="32" resid="icon32"/>
+                    <bt:Image size="80" resid="icon80"/>
+                  </Icon>
+                  <Action xsi:type="ShowTaskpane">
+                    <SourceLocation resid="taskPaneUrl"/>
+                    
+                  </Action>
+                </Control>
+              </Group>
+            </OfficeTab>
+          </ExtensionPoint>
+
+        </DesktopFormFactor>
+      </Host>
+    </Hosts>
+
+    <Resources>
+      <bt:Images>
+        <bt:Image id="icon16" DefaultValue="https://td-tau-nine.vercel.app/icon16.png"/>
+        <bt:Image id="icon32" DefaultValue="https://td-tau-nine.vercel.app/icon32.png"/>
+        <bt:Image id="icon80" DefaultValue="https://td-tau-nine.vercel.app/icon80.png"/>
+      </bt:Images>
+      <bt:Urls>
+        <bt:Url id="taskPaneUrl"  DefaultValue="https://td-tau-nine.vercel.app/taskpane.html"/>
+        <bt:Url id="functionFile" DefaultValue="https://td-tau-nine.vercel.app/commands.html"/>
+      </bt:Urls>
+      <bt:ShortStrings>
+        <bt:String id="groupLabel"      DefaultValue="TradeDoc"/>
+        <bt:String id="paneButtonLabel" DefaultValue="Extract Document"/>
+      </bt:ShortStrings>
+      <bt:LongStrings>
+        <bt:String id="paneButtonTip" DefaultValue="Extract trade document data from this email's attachments using TradeDoc AI."/>
+      </bt:LongStrings>
+    </Resources>
+
+  </VersionOverrides>
+
+</OfficeApp>
